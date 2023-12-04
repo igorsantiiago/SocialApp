@@ -13,5 +13,7 @@ public class AppUserMap : IEntityTypeConfiguration<AppUser>
 
         builder.Property(x => x.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Property(x => x.UserName).IsRequired().HasColumnName("UserName").HasColumnType("NVARCHAR");
+        builder.Property(x => x.PasswordHash).IsRequired().HasColumnName("PasswordHash").HasColumnType("BLOB");
+        builder.Property(x => x.PasswordSalt).HasColumnName("PasswordSalt").HasColumnType("BLOB");
     }
 }
