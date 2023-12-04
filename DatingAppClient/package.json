@@ -1,5 +1,5 @@
 {
-  "name": "dating-app.client",
+  "name": "dating-app-client",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

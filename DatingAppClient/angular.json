@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "DatingApp.Client": {
+    "DatingAppClient": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/dating-app.client",
+            "outputPath": "dist/dating-app-client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "DatingApp.Client:build:production"
+              "browserTarget": "DatingAppClient:build:production"
             },
             "development": {
-              "browserTarget": "DatingApp.Client:build:development"
+              "browserTarget": "DatingAppClient:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "DatingApp.Client:build"
+            "browserTarget": "DatingAppClient:build"
           }
         },
         "test": {
