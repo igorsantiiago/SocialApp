@@ -1,10 +1,12 @@
 ﻿using DatingApp.API.Data;
 using DatingApp.API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Controllers;
 
+[Authorize]
 public class UserController : BaseApiController
 {
     private readonly AppDbContext _context;
@@ -20,6 +22,7 @@ public class UserController : BaseApiController
         return users;
     }
 
+    [AllowAnonymous]
     [HttpGet("search/{id}")]
     public async Task<ActionResult<AppUser>> GetUserById(int id)
     {
