@@ -1,0 +1,16 @@
+<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+    <h2 class="text-center text-primary">Formulário de Cadastro</h2>
+    <hr>
+    <div class="mb-3">
+        <input type="text" class="form-control" name="username" [(ngModel)]="model.username" placeholder="Usuário">
+    </div>
+    <div class="mb-3">
+        <input type="password" class="form-control" name="password" [(ngModel)]="model.password" placeholder="Senha">
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary btn-lg me-2" type="submit">Registrar</button>
+        <button class="btn btn-outline-secondary btn-lg" type="button" (click)="cancel()">Cancelar</button>
+    </div>
+    <p class="mt-3 mb-0 text-primary">ATENÇÃO:</p>
+    <p>Usuário será cadastrado com letras minusculas</p>
+</form>

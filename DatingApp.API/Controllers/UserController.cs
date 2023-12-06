@@ -15,6 +15,7 @@ public class UserController : BaseApiController
         _context = context;
     }
 
+    [AllowAnonymous]
     [HttpGet("search/list")]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
@@ -22,7 +23,6 @@ public class UserController : BaseApiController
         return users;
     }
 
-    [AllowAnonymous]
     [HttpGet("search/{id}")]
     public async Task<ActionResult<AppUser>> GetUserById(int id)
     {
