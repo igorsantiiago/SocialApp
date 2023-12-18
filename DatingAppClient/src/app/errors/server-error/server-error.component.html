@@ -1,0 +1,22 @@
+<h1 class="text-center">Internal Server Error</h1>
+
+<ng-container *ngIf="error">
+    <h4 class="text-danger">Error: {{error.message}}</h4>
+
+    <p style="font-weight: bold">
+        Caso esteja vendo essa tela, então provávelmente o erro não esta no Angular.
+    </p>
+
+    <p>Próximos passos:</p>
+
+    <ol>
+        <li>Abra o navagador e verifique no Dev Tools na aba de network.</li>
+        <li>Análise a URL - Verifique o endpoint.</li>
+        <li>Reproduza o problema no Postman</li>
+    </ol>
+
+    <p style="font-weight: bold">Verifique a Stack de erros e tente identificar o que possa estar acontecendo.</p>
+    <code class="mt-5" style="background-color: whitesmoke;">
+    {{error.details}}
+    </code>
+</ng-container>

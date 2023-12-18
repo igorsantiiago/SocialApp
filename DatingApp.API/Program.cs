@@ -1,9 +1,5 @@
-using System.Text;
 using DatingApp.API;
-using DatingApp.API.Data;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
+using DatingApp.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +12,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
