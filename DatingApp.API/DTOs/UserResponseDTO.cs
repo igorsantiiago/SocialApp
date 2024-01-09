@@ -1,4 +1,4 @@
-﻿namespace DatingApp.API;
+﻿namespace DatingApp.API.DTOs;
 
 public class UserResponseDTO
 {

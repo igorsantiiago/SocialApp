@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace DatingApp.API;
+namespace DatingApp.API.Extensions;
 
 public static class IdentityServiceExtensions
 {

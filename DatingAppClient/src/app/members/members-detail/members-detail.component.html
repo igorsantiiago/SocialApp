@@ -1,1 +1,57 @@
-<p>members-detail works!</p>
+<div class="row" *ngIf="member">
+    <div class="col-4">
+        <div class="card">
+            <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}"
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div>
+                    <strong>Localização:</strong>
+                    <p>{{member.city}}, {{member.country}}</p>
+                </div>
+                <div>
+                    <strong>Idade:</strong>
+                    <p>{{member.age}}</p>
+                </div>
+                <div>
+                    <strong>Ultima Visualização:</strong>
+                    <p>{{member.lastActivity}}</p>
+                </div>
+                <div>
+                    <strong>Conta Criada:</strong>
+                    <p>{{member.createdAt}}</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="btn-group d-flex">
+                    <button class="btn btn-danger">
+                        <i class="bi bi-heart-fill"> Like</i>
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="bi bi-envelope-fill"> DM</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <tabset class="member-tabset">
+            <tab heading="Sobre {{member.knownAs}}">
+                <h4>Descrição</h4>
+                <p>{{member.introduction}}</p>
+                <h4>Buscando por</h4>
+                <p>{{member.lookingFor}}</p>
+            </tab>
+            <tab heading="Interesses">
+                <h4>Interesses</h4>
+                <p>{{member.interests}}</p>
+            </tab>
+            <tab heading="Galeria" #photoTab="tab">
+                <!-- <gallery *ngIf="photoTab.active" [items]="images" class="gallery"></gallery> -->
+            </tab>
+            <tab heading="Messagens">
+                <p>Local das mensagens entre usuários.</p>
+            </tab>
+        </tabset>
+    </div>
+</div>
