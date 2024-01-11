@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DatingApp.API.DTOs;
 using DatingApp.API.DTOs.EntitiesDTO;
 using DatingApp.API.Entities;
 using DatingApp.API.Extensions;
@@ -16,5 +17,7 @@ public class AutoMapperProfiles : Profile
                         options => options.MapFrom(src => src.BirthDate.CalculateAge()));
 
         CreateMap<Photo, PhotoDTO>();
+
+        CreateMap<AppUserUpdateDTO, AppUser>();
     }
 }

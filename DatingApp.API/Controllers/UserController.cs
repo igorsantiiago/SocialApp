@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using DatingApp.API.Data;
+using DatingApp.API.DTOs;
 using DatingApp.API.DTOs.EntitiesDTO;
 using DatingApp.API.Entities;
 using DatingApp.API.Interfaces;
@@ -43,5 +45,22 @@ public class UserController : BaseApiController
     {
         var user = await _repository.GetAppUserDtoByUsername(username);
         return user!;
+    }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateUser(AppUserUpdateDTO appUserUpdateDto)
+    {
+        var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var user = await _repository.GetUserByUsername(username!);
+
+        if (user == null)
+            return NotFound();
+
+        _mapper.Map(appUserUpdateDto, user);
+
+        if (await _repository.SaveAllAsync())
+            return NoContent();
+
+        return BadRequest("Falha ao atualizar usuário.");
     }
 }

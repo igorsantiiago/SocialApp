@@ -32,7 +32,7 @@ export class MembersDetailComponent implements OnInit {
     if (!username) return;
 
     this.memberService.getMemberByUsername(username).subscribe({
-      next: member => this.member = member,
+      next: member => this.member = member
       // this.getImages()
     });
   }
