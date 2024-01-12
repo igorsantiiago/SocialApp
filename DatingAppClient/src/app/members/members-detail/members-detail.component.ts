@@ -13,13 +13,11 @@ import { MembersService } from 'src/app/_services/members.service';
   imports: [
     CommonModule,
     TabsModule,
-    // GalleryModule
   ]
 })
 
 export class MembersDetailComponent implements OnInit {
   member: Member | undefined;
-  // images: GalleryItem[] = [];
 
   constructor(private memberService: MembersService, private route: ActivatedRoute) { }
 

@@ -37,13 +37,17 @@ public class AccountController : BaseApiController
         await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
 
-        return new UserResponseDTO(user.UserName, _tokenService.CreateToken(user));
+        return new UserResponseDTO
+        {
+            Username = user.UserName,
+            Token = _tokenService.CreateToken(user)
+        };
     }
 
     [HttpPost("login")]
     public async Task<ActionResult<UserResponseDTO>> LoginAccount(LoginDTO loginDto)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username);
+        var user = await _context.Users.Include(p => p.Photos).FirstOrDefaultAsync(x => x.UserName == loginDto.Username);
 
         if (user is null)
             return Unauthorized("Username or Password Invalid.");
@@ -58,7 +62,12 @@ public class AccountController : BaseApiController
                 return Unauthorized("Username or Password Invalid");
         }
 
-        return new UserResponseDTO(user.UserName, _tokenService.CreateToken(user));
+        return new UserResponseDTO
+        {
+            Username = user.UserName,
+            Token = _tokenService.CreateToken(user),
+            PhotoUrl = user.Photos.FirstOrDefault(x => x.IsProfile)?.Url!
+        };
     }
 
     private async Task<bool> UserExists(string username)

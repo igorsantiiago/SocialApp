@@ -41,4 +41,12 @@ export class MembersService {
       this.members[index] = { ...this.members[index], ...member }
     }));
   }
+
+  setProfilePicture(photoId: number) {
+    return this.http.put(this.baseUrl + 'user/photo/update/profile-picture/' + photoId, {});
+  }
+
+  deletePhoto(photoId: number) {
+    return this.http.delete(this.baseUrl + 'user/photo/delete/' + photoId, {});
+  }
 }
