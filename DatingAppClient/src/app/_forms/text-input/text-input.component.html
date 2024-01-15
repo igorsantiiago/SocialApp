@@ -1,0 +1,14 @@
+<div class="mb-3">
+    <input type="{{type}}" class="form-control" [formControl]="control" placeholder="{{label}}"
+        [class.is-invalid]="ngControl.invalid && ngControl.touched">
+
+    <div class="invalid-feedback" *ngIf="control.errors?.['required']">Preencha o campo {{label}}</div>
+
+    <div class="invalid-feedback" *ngIf="control.errors?.['minlength']">{{label}} deve conter no
+        mínimo {{control.errors?.['minlength'].requiredLength}} caracteres</div>
+
+    <div class="invalid-feedback" *ngIf="control.errors?.['maxlength']">{{label}} deve conter no
+        máximo {{control.errors?.['maxlength'].requiredLength}} caracteres</div>
+
+    <div class="invalid-feedback" *ngIf="control.errors?.['notMatching']">As senhas precisam ser iguais</div>
+</div>
