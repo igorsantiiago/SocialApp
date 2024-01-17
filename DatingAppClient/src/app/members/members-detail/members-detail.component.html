@@ -14,11 +14,11 @@
                 </div>
                 <div>
                     <strong>Ultima Visualização:</strong>
-                    <p>{{member.lastActivity}}</p>
+                    <p>{{member.lastActivity | date: 'dd MMMM yyyy - hh:mm'}}hrs</p>
                 </div>
                 <div>
                     <strong>Conta Criada:</strong>
-                    <p>{{member.createdAt}}</p>
+                    <p>{{member.createdAt | date: 'dd MMMM yyyy'}}</p>
                 </div>
             </div>
             <div class="card-footer">

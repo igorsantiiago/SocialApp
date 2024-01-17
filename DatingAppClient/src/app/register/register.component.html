@@ -18,9 +18,6 @@
         <label class="form-check-label ms-2">
             <input type="radio" class="form-check-input" value="feminino" formControlName="gender"> Feminino
         </label>
-        <label class="form-check-label ms-2">
-            <input type="radio" class="form-check-input" value="não-binário" formControlName="gender"> Não Binário
-        </label>
     </div>
 
     <app-date-picker [formControl]="$any(registerForm.controls['dateOfBirth'])" [label]="'Data de Nascimento'"

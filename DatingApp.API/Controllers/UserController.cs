@@ -3,6 +3,7 @@ using DatingApp.API.DTOs;
 using DatingApp.API.DTOs.EntitiesDTO;
 using DatingApp.API.Entities;
 using DatingApp.API.Extensions;
+using DatingApp.API.Helpers;
 using DatingApp.API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,13 +24,22 @@ public class UserController : BaseApiController
     }
 
     [HttpGet("search/list")]
-    public async Task<ActionResult<IEnumerable<AppUserDTO>>> GetUsers()
+    public async Task<ActionResult<PagedList<AppUserDTO>>> GetUsers([FromQuery] UserParams userParams)
     {
-        var users = await _repository.GetAppUsersDtoAsync();
+        var currentUser = await _repository.GetUserByUsername(User.GetUsername());
+        userParams.CurrentUsername = currentUser!.UserName;
+
+        if (string.IsNullOrEmpty(userParams.Gender))
+        {
+            userParams.Gender = currentUser.Gender == "masculino" ? "feminino" : "masculino";
+        }
+
+        var users = await _repository.GetAppUsersDtoAsync(userParams);
+        Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages));
 
         return Ok(users);
-
     }
+
     [HttpGet("search/id/{id}")]
     public async Task<ActionResult<AppUserDTO>> GetUserById(int id)
     {
