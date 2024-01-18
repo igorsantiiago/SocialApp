@@ -11,9 +11,11 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<AppUser> Users { get; set; }
+    public DbSet<UserLike> UserLikes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new AppUserMap());
+        modelBuilder.ApplyConfiguration(new UserLikeMap());
     }
 }

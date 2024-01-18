@@ -1,1 +1,36 @@
-<p>lists works!</p>
+<div class="text-center mt-3">
+    <h2 *ngIf="predicate === 'liked'"><i class="bi bi-heart-fill"></i> Interesse</h2>
+    <h2 *ngIf="predicate === 'likedBy'"><i class="bi bi-arrow-through-heart-fill"></i> Curtidas</h2>
+</div>
+
+<div class="container">
+    <div class="d-flex">
+        <div class="col">
+            <div class="btn-group float-end" name="predicate">
+                <button class="btn" style="font-size: .8rem;" btnRadio="liked" [(ngModel)]="predicate"
+                    (click)="loadLikes()">
+                    <i class="bi bi-heart-fill"></i>
+                    Tenho interesse
+                </button>
+                <button class="btn" style="font-size: .8rem;" btnRadio="likedBy" [(ngModel)]="predicate"
+                    (click)="loadLikes()">
+                    <i class="bi bi-arrow-through-heart-fill"></i>
+                    Curtiram meu perfil
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-2" *ngFor="let member of members">
+            <app-member-card [member]="member"></app-member-card>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination">
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+        [maxSize]="10" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    </pagination>
+</div>

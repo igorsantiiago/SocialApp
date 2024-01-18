@@ -21,8 +21,8 @@ public class AppUser
     public List<Photo> Photos { get; set; } = new();
 
 
-    // public int GetAge()
-    //     => BirthDate.CalculateAge();
+    public List<UserLike> LikedByUsers { get; set; } = null!;
+    public List<UserLike> LikedUsers { get; set; } = null!;
 
 
 }
