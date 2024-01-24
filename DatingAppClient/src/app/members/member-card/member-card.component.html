@@ -12,7 +12,7 @@
                     <i class="bi bi-heart-fill"></i>
                 </button>
             </li>
-            <li class="list-inline-item">
+            <li class="list-inline-item" routerLink="/members/{{member.userName}}" [queryParams]="{tab: 'Mensagens'}">
                 <button class="btn btn-primary btn-list-inline-item">
                     <i class="bi bi-envelope-fill"></i>
                 </button>

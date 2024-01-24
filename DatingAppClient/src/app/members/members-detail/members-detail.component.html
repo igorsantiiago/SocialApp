@@ -1,4 +1,4 @@
-<div class="row" *ngIf="member">
+<div class="row">
     <div class="col-4">
         <div class="card">
             <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}"
@@ -26,7 +26,7 @@
                     <button class="btn btn-danger">
                         <i class="bi bi-heart-fill"> Like</i>
                     </button>
-                    <button class="btn btn-success">
+                    <button class="btn btn-success" (click)="selectTab('Mensagens')">
                         <i class="bi bi-envelope-fill"> DM</i>
                     </button>
                 </div>
@@ -35,22 +35,22 @@
     </div>
 
     <div class="col-8">
-        <tabset class="member-tabset">
-            <tab heading="Sobre {{member.knownAs}}">
+        <tabset class="member-tabset" #memberTabs>
+            <tab heading="Sobre {{member.knownAs}}" (selectTab)="onTabActivated($event)">
                 <h4>Descrição</h4>
                 <p>{{member.introduction}}</p>
                 <h4>Buscando por</h4>
                 <p>{{member.lookingFor}}</p>
             </tab>
-            <tab heading="Interesses">
+            <tab heading="Interesses" (selectTab)="onTabActivated($event)">
                 <h4>Interesses</h4>
                 <p>{{member.interests}}</p>
             </tab>
-            <tab heading="Galeria">
+            <tab heading="Galeria" (selectTab)="onTabActivated($event)">
                 <h4>Adicionar galeria"</h4>
             </tab>
-            <tab heading="Messagens">
-                <p>Local das mensagens entre usuários.</p>
+            <tab heading="Mensagens" (selectTab)="onTabActivated($event)">
+                <app-member-messages [username]="member.userName" [messages]="messages"></app-member-messages>
             </tab>
         </tabset>
     </div>

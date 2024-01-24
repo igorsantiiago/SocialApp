@@ -24,5 +24,6 @@ public class AppUser
     public List<UserLike> LikedByUsers { get; set; } = null!;
     public List<UserLike> LikedUsers { get; set; } = null!;
 
-
+    public List<Message> MessagesSent { get; set; } = null!;
+    public List<Message> MessagesReceived { get; set; } = null!;
 }
