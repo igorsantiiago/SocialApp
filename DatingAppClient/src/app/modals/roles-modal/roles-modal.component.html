@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <div class="modal-title pull-left">Cargos de {{username}}</div>
+    <button type="button" aria-label="Close" (click)="bsModalRef.hide()" class="btn-close close pull-right">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form #rolesForm="ngForm" id="rolesForm">
+        <div class="form-check" *ngFor="let role of availableRoles">
+            <input type="checkbox" class="form-check-input" [checked]="selectedRoles.includes(role)" value="role"
+                (change)="updateChecked(role)" [disabled]="role === 'Admin' && username === 'admin'">
+            <label>{{role}}</label>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Salvar</button>
+</div>

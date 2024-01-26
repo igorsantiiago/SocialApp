@@ -25,10 +25,6 @@ public class AppUserMap : IEntityTypeConfiguration<AppUser>
             .HasColumnName("PasswordHash")
             .HasColumnType("BLOB");
 
-        builder.Property(x => x.PasswordSalt)
-            .HasColumnName("PasswordSalt")
-            .HasColumnType("BLOB");
-
         builder.Property(x => x.BirthDate)
             .IsRequired()
             .HasColumnName("BirthDate");
@@ -80,5 +76,9 @@ public class AppUserMap : IEntityTypeConfiguration<AppUser>
             .HasForeignKey(x => x.AppUserId)
             .HasConstraintName("FK_AppUser_PhotosId")
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(x => x.UserRoles).WithOne(x => x.User)
+            .HasForeignKey(x => x.UserId)
+            .IsRequired();
     }
 }

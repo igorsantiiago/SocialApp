@@ -27,7 +27,10 @@ public class UserController : BaseApiController
     public async Task<ActionResult<PagedList<AppUserDTO>>> GetUsers([FromQuery] UserParams userParams)
     {
         var currentUser = await _repository.GetUserByUsername(User.GetUsername());
-        userParams.CurrentUsername = currentUser!.UserName;
+        if (currentUser == null)
+            return BadRequest();
+
+        userParams.CurrentUsername = currentUser.UserName!;
 
         if (string.IsNullOrEmpty(userParams.Gender))
         {
