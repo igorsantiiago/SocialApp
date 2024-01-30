@@ -24,3 +24,8 @@
     border-bottom: 1px solid #B3A9A9;
     font-weight: 700;
 }
+
+.text-success,
+.text-danger {
+    font-weight: bold;
+}

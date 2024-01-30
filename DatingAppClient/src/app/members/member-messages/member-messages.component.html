@@ -1,11 +1,11 @@
 <div class="card">
     <div class="card-body">
-        <div *ngIf="messages.length === 0" class="card-body__empty">
+        <div *ngIf="(messageService.messageThread$ | async)?.length === 0" class="card-body__empty">
             Nenhuma mensagem...
         </div>
 
-        <ul *ngIf="messages.length > 0" class="chat">
-            <li *ngFor="let message of messages">
+        <ul *ngIf="(messageService.messageThread$ | async)!.length > 0" class="chat">
+            <li *ngFor="let message of (messageService.messageThread$ | async)">
                 <div>
                     <span class="chat-img float-end">
                         <img class="rounded-circle" src="{{message.senderPhotoUrl || './assets/user.png'}}"
@@ -14,15 +14,14 @@
                     <div class="chat-body">
                         <div class="header">
                             <small class="text-muted">
-                                <span class="bi bi-clock-fill"> {{message.messageSent | date: 'dd MMM yyyy'}} </span>
+                                <span class="bi bi-clock-fill"> {{message.messageSent | date: 'dd MMM yyyy - hh:mm'}}
+                                </span>
                                 <span class="text-danger"
                                     *ngIf="!message.dateRead && message.senderUsername !== username">
-                                    {{message.messageSent | date: 'hh:mm'}} - ( não lida )</span>
+                                    ( não lida )</span>
                                 <span class="text-success"
                                     *ngIf="message.dateRead && message.senderUsername !== username">( mensagem lida
                                     {{message.dateRead | date: 'dd MMM yyyy - hh:mm'}} )</span>
-                                <span class="text" *ngIf="message.senderUsername == username">
-                                    {{message.messageSent | date: ' - hh:mm'}}</span>
                             </small>
                         </div>
                         <p>{{message.content}}</p>

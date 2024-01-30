@@ -4,6 +4,14 @@
             <img src="{{member.photoUrl || './assets/user.png'}}" alt="{{member.knownAs}}"
                 class="card-img-top img-thumbnail">
             <div class="card-body">
+                <div class="mb-2" *ngIf="(presenceService.onlineUsers$ | async)?.includes(member.userName)">
+                    <i class="bi bi-circle-fill text-success"></i>
+                    <strong>Online</strong>
+                </div>
+                <div class="mb-2" *ngIf="!(presenceService.onlineUsers$ | async)?.includes(member.userName)">
+                    <i class="bi bi-circle-fill text-danger"></i>
+                    <strong> Offline</strong>
+                </div>
                 <div>
                     <strong>Localização:</strong>
                     <p>{{member.city}}, {{member.country}}</p>
@@ -50,7 +58,7 @@
                 <h4>Adicionar galeria"</h4>
             </tab>
             <tab heading="Mensagens" (selectTab)="onTabActivated($event)">
-                <app-member-messages [username]="member.userName" [messages]="messages"></app-member-messages>
+                <app-member-messages [username]="member.userName"></app-member-messages>
             </tab>
         </tabset>
     </div>
