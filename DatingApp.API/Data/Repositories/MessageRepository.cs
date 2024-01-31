@@ -45,32 +45,24 @@ public class MessageRepository : IMessageRepository
 
     public async Task<IEnumerable<MessageDTO>> GetMessageThread(string currentUsername, string recipientUsername)
     {
-        var messages = await _context.Messages
-            .Include(s => s.Sender).ThenInclude(p => p.Photos)
-            .Include(r => r.Recipient).ThenInclude(p => p.Photos)
+        var query = _context.Messages
             .Where(
                 x => x.RecipientUsername == currentUsername && x.RecipientDeleted == false &&
                 x.SenderUsername == recipientUsername ||
                 x.RecipientUsername == recipientUsername && x.SenderDeleted == false &&
                 x.SenderUsername == currentUsername
-            ).OrderBy(m => m.MessageSent).ToListAsync();
+            ).OrderBy(m => m.MessageSent).AsQueryable();
 
-        var unreadMessages = messages.Where(m => m.DateRead == null && m.RecipientUsername == currentUsername).ToList();
+        var unreadMessages = query.Where(m => m.DateRead == null && m.RecipientUsername == currentUsername).ToList();
         if (unreadMessages.Any())
         {
             foreach (var message in unreadMessages)
             {
                 message.DateRead = DateTime.UtcNow;
             }
-
-            await _context.SaveChangesAsync();
         }
-
-        return _mapper.Map<IEnumerable<MessageDTO>>(messages);
+        return await query.ProjectTo<MessageDTO>(_mapper.ConfigurationProvider).ToListAsync();
     }
-
-    public async Task<bool> SaveAllAsync()
-        => await _context.SaveChangesAsync() > 0;
 
     public void AddGroup(Group group)
         => _context.Groups.Add(group);
@@ -96,7 +88,7 @@ public class MessageRepository : IMessageRepository
 
     public async Task<Group> GetGroupForConnection(string connectionId)
     {
-        var group =  await _context.Groups
+        var group = await _context.Groups
             .Include(x => x.Connections)
             .Where(x => x.Connections.Any(c => c.ConnectionId == connectionId))
             .FirstOrDefaultAsync();

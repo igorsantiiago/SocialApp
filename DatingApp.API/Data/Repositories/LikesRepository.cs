@@ -56,7 +56,4 @@ public class LikesRepository : ILikesRepository
         var users = await _context.Users.Include(x => x.LikedUsers).FirstOrDefaultAsync(x => x.Id == userId);
         return users!;
     }
-
-    public async Task<bool> SaveAllAsync()
-    => await _context.SaveChangesAsync() > 0;
 }

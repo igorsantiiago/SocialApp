@@ -5,7 +5,6 @@ using DatingApp.API.Entities;
 using DatingApp.API.Helpers;
 using DatingApp.API.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace DatingApp.API.Data.Repositories;
 
@@ -51,9 +50,12 @@ public class UserRepository : IUserRepository
             .ProjectTo<AppUserDTO>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync();
 
-    public async Task<bool> SaveAllAsync()
-        => await _context.SaveChangesAsync() > 0;
-
     public void Update(AppUser user)
         => _context.Entry(user).State = EntityState.Modified;
+
+    public async Task<string> GetUserGender(string username)
+    {
+        var gender = await _context.Users.Where(x => x.UserName == username).Select(x => x.Gender).FirstOrDefaultAsync();
+        return gender!;
+    }
 }

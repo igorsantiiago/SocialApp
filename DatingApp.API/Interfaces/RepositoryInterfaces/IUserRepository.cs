@@ -12,5 +12,5 @@ public interface IUserRepository
     Task<PagedList<AppUserDTO>> GetAppUsersDtoAsync(UserParams userParams);
     Task<AppUserDTO?> GetAppUserDtoByUsername(string username);
     void Update(AppUser user);
-    Task<bool> SaveAllAsync();
+    Task<string> GetUserGender(string username);
 }
