@@ -10,7 +10,9 @@ public interface IUserRepository
     Task<AppUser?> GetUserByIdAsync(int id);
     Task<AppUser?> GetUserByUsername(string username);
     Task<PagedList<AppUserDTO>> GetAppUsersDtoAsync(UserParams userParams);
-    Task<AppUserDTO?> GetAppUserDtoByUsername(string username);
+    Task<AppUserDTO?> GetAppUserDtoByUsername(string username, bool isCurrentUser);
     void Update(AppUser user);
     Task<string> GetUserGender(string username);
+
+    Task<AppUser> GetUserByPhotoId(int photoId);
 }

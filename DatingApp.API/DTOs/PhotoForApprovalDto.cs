@@ -1,9 +1,9 @@
-﻿namespace DatingApp.API.DTOs.EntitiesDTO;
+﻿namespace DatingApp.API.DTOs;
 
-public class PhotoDTO
+public class PhotoForApprovalDto
 {
     public int Id { get; set; }
     public string Url { get; set; } = string.Empty;
-    public bool IsProfile { get; set; }
+    public string Username { get; set; } = string.Empty;
     public bool IsApproved { get; set; }
 }

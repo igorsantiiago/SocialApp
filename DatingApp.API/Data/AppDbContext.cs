@@ -18,6 +18,7 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int,
     public DbSet<Message> Messages { get; set; }
     public DbSet<Group> Groups { get; set; }
     public DbSet<Connection> Connections { get; set; }
+    public DbSet<Photo> Photos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,6 +26,8 @@ public class AppDbContext : IdentityDbContext<AppUser, AppRole, int,
         modelBuilder.Entity<AppRole>().HasMany(x => x.UserRoles).WithOne(x => x.Role)
             .HasForeignKey(x => x.RoleId)
             .IsRequired();
+
+        modelBuilder.Entity<Photo>().HasQueryFilter(p => p.IsApproved);
 
         modelBuilder.ApplyConfiguration(new AppUserMap());
         modelBuilder.ApplyConfiguration(new UserLikeMap());

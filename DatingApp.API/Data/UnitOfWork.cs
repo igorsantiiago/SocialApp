@@ -15,7 +15,7 @@ public class UnitOfWork : IUnitOfWork
         _mapper = mapper;
     }
 
-    public IUserRepository UserRepository 
+    public IUserRepository UserRepository
         => new UserRepository(_context, _mapper);
 
     public IMessageRepository MessageRepository
@@ -23,6 +23,9 @@ public class UnitOfWork : IUnitOfWork
 
     public ILikesRepository LikesRepository
         => new LikesRepository(_context);
+
+    public IPhotoRepository PhotoRepository
+        => new PhotoRepository(_context);
 
     public async Task<bool> Complete()
         => await _context.SaveChangesAsync() > 0;

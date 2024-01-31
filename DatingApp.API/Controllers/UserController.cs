@@ -56,8 +56,10 @@ public class UserController : BaseApiController
     [HttpGet("search/username/{username}")]
     public async Task<ActionResult<AppUserDTO>> GetUserByUsername(string username)
     {
-        var user = await _unitOfWork.UserRepository.GetAppUserDtoByUsername(username);
-        return user!;
+        var currentUsername = User.GetUsername();
+        return await _unitOfWork.UserRepository.GetAppUserDtoByUsername(username, isCurrentUser: currentUsername == username);
+        // var user = await _unitOfWork.UserRepository.GetAppUserDtoByUsername(username);
+        // return user!;
     }
 
     [HttpPut]
@@ -132,13 +134,13 @@ public class UserController : BaseApiController
     }
 
     [HttpDelete("photo/delete/{photoId}")]
-    public async Task<ActionResult> SetProfilePicture(int photoId)
+    public async Task<ActionResult> DeletePicture(int photoId)
     {
         var user = await _unitOfWork.UserRepository.GetUserByUsername(User.GetUsername());
         if (user == null)
             return NotFound();
 
-        var photo = user.Photos.FirstOrDefault(x => x.Id == photoId);
+        var photo = await _unitOfWork.PhotoRepository.GetPhotoById(photoId);
         if (photo == null)
             return NotFound();
 
