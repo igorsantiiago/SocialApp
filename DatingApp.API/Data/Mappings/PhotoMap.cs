@@ -20,7 +20,7 @@ public class PhotoMap : IEntityTypeConfiguration<Photo>
         builder.Property(x => x.Url)
             .IsRequired()
             .HasColumnName("Url")
-            .HasColumnType("TEXT");
+            .HasColumnType("NVARCHAR");
 
         builder.Property(x => x.IsProfile)
             .HasColumnName("IsProfile");
@@ -28,6 +28,6 @@ public class PhotoMap : IEntityTypeConfiguration<Photo>
         builder.Property(x => x.PublicId)
             .IsRequired()
             .HasColumnName("PublicID")
-            .HasColumnType("TEXT");
+            .HasColumnType("NVARCHAR");
     }
 }

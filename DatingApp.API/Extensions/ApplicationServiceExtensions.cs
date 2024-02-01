@@ -13,7 +13,7 @@ public static class ApplicationServiceExtensions
     {
         services.AddDbContext<AppDbContext>(opt =>
         {
-            opt.UseSqlite(configurations.GetConnectionString("DefaultConnection"));
+            opt.UseSqlServer(configurations.GetConnectionString("DefaultConnection"));
         });
 
         services.AddCors();

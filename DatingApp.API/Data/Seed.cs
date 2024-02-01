@@ -9,6 +9,12 @@ namespace DatingApp.API.Data;
 
 public class Seed
 {
+    public static async Task ClearConnections(AppDbContext context)
+    {
+        context.Connections.RemoveRange(context.Connections);
+        await context.SaveChangesAsync();
+    }
+
     public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
     {
         if (await userManager.Users.AnyAsync())
@@ -36,6 +42,8 @@ public class Seed
         {
             user.Photos.First().IsApproved = true;
             user.UserName = user.UserName!.ToLower();
+            user.CreatedAt = DateTime.SpecifyKind(user.CreatedAt, DateTimeKind.Utc);
+            user.LastActivity = DateTime.SpecifyKind(user.LastActivity, DateTimeKind.Utc);
             await userManager.CreateAsync(user, "Pa$$w0rd1234");
             await userManager.AddToRoleAsync(user, "Usuário");
         }

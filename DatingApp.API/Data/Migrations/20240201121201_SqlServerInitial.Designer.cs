@@ -3,6 +3,7 @@ using System;
 using DatingApp.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -11,38 +12,45 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatingApp.API.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240124190344_MicrosoftIdentityAdded")]
-    partial class MicrosoftIdentityAdded
+    [Migration("20240201121201_SqlServerInitial")]
+    partial class SqlServerInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("DatingApp.API.Entities.AppRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasDatabaseName("RoleNameIndex");
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -51,103 +59,113 @@ namespace DatingApp.API.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AccessFailedCount")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<DateOnly>("BirthDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("date")
                         .HasColumnName("BirthDate");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("City");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("Country");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime2")
                         .HasColumnName("CreatedAt");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("Gender")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasMaxLength(30)
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("Gender");
 
                     b.Property<string>("Interests")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasMaxLength(1000)
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("Interests");
 
                     b.Property<string>("Introduction")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasMaxLength(4000)
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("Introduction");
 
                     b.Property<string>("KnownAs")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("KnownAs");
 
                     b.Property<DateTime>("LastActivity")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime2")
                         .HasColumnName("LastActivity");
 
                     b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("LookingFor")
                         .IsRequired()
-                        .HasColumnType("TEXT")
+                        .HasMaxLength(1000)
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("LookingFor");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("BLOB")
+                        .HasMaxLength(1000)
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("PasswordHash");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(256)
+                        .HasMaxLength(100)
                         .HasColumnType("NVARCHAR")
                         .HasColumnName("UserName");
 
@@ -158,7 +176,8 @@ namespace DatingApp.API.Data.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("Users", (string)null);
                 });
@@ -166,10 +185,10 @@ namespace DatingApp.API.Data.Migrations
             modelBuilder.Entity("DatingApp.API.Entities.AppUserRole", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -178,41 +197,72 @@ namespace DatingApp.API.Data.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("DatingApp.API.Entities.Connection", b =>
+                {
+                    b.Property<string>("ConnectionId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("GroupName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ConnectionId");
+
+                    b.HasIndex("GroupName");
+
+                    b.ToTable("Connections");
+                });
+
+            modelBuilder.Entity("DatingApp.API.Entities.Group", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Name");
+
+                    b.ToTable("Groups");
+                });
+
             modelBuilder.Entity("DatingApp.API.Entities.Message", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateRead")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("MessageSent")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("RecipientDeleted")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<int>("RecipientId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("RecipientUsername")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("SenderDeleted")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<int>("SenderId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("SenderUsername")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -227,36 +277,41 @@ namespace DatingApp.API.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AppUserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsProfile")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bit");
 
                     b.Property<string>("PublicId")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Photo");
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("DatingApp.API.Entities.UserLike", b =>
                 {
                     b.Property<int>("SourceUserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<int>("TargetUserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("SourceUserId", "TargetUserId");
 
@@ -269,16 +324,18 @@ namespace DatingApp.API.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -291,16 +348,18 @@ namespace DatingApp.API.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -312,16 +371,16 @@ namespace DatingApp.API.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -333,16 +392,16 @@ namespace DatingApp.API.Data.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
                     b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -366,6 +425,13 @@ namespace DatingApp.API.Data.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DatingApp.API.Entities.Connection", b =>
+                {
+                    b.HasOne("DatingApp.API.Entities.Group", null)
+                        .WithMany("Connections")
+                        .HasForeignKey("GroupName");
                 });
 
             modelBuilder.Entity("DatingApp.API.Entities.Message", b =>
@@ -404,13 +470,13 @@ namespace DatingApp.API.Data.Migrations
                     b.HasOne("DatingApp.API.Entities.AppUser", "SourceUser")
                         .WithMany("LikedUsers")
                         .HasForeignKey("SourceUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DatingApp.API.Entities.AppUser", "TargetUser")
                         .WithMany("LikedByUsers")
                         .HasForeignKey("TargetUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("SourceUser");
@@ -472,6 +538,11 @@ namespace DatingApp.API.Data.Migrations
                     b.Navigation("Photos");
 
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("DatingApp.API.Entities.Group", b =>
+                {
+                    b.Navigation("Connections");
                 });
 #pragma warning restore 612, 618
         }

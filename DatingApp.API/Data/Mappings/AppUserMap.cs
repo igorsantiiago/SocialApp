@@ -18,12 +18,14 @@ public class AppUserMap : IEntityTypeConfiguration<AppUser>
         builder.Property(x => x.UserName)
             .IsRequired()
             .HasColumnName("UserName")
-            .HasColumnType("NVARCHAR");
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(100);
 
         builder.Property(x => x.PasswordHash)
             .IsRequired()
             .HasColumnName("PasswordHash")
-            .HasColumnType("BLOB");
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(1000);
 
         builder.Property(x => x.BirthDate)
             .IsRequired()
@@ -32,7 +34,8 @@ public class AppUserMap : IEntityTypeConfiguration<AppUser>
         builder.Property(x => x.KnownAs)
             .IsRequired()
             .HasColumnName("KnownAs")
-            .HasColumnType("TEXT");
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(100);
 
         builder.Property(x => x.CreatedAt)
             .IsRequired()
@@ -45,32 +48,38 @@ public class AppUserMap : IEntityTypeConfiguration<AppUser>
         builder.Property(x => x.Gender)
             .IsRequired()
             .HasColumnName("Gender")
-            .HasColumnType("TEXT");
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(30);
 
         builder.Property(x => x.Introduction)
             .IsRequired()
             .HasColumnName("Introduction")
-            .HasColumnType("TEXT");
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(4000);
 
         builder.Property(x => x.LookingFor)
             .IsRequired()
             .HasColumnName("LookingFor")
-            .HasColumnType("TEXT");
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(1000);
 
         builder.Property(x => x.Interests)
             .IsRequired()
             .HasColumnName("Interests")
-            .HasColumnType("TEXT");
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(1000);
 
         builder.Property(x => x.City)
             .IsRequired()
             .HasColumnName("City")
-            .HasColumnType("TEXT");
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(100);
 
         builder.Property(x => x.Country)
             .IsRequired()
             .HasColumnName("Country")
-            .HasColumnType("TEXT");
+            .HasColumnType("NVARCHAR")
+            .HasMaxLength(100);
 
         builder.HasMany(x => x.Photos).WithOne(x => x.AppUser)
             .HasForeignKey(x => x.AppUserId)

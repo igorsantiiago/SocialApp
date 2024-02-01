@@ -14,11 +14,10 @@ public class UserLikeMap : IEntityTypeConfiguration<UserLike>
 
         builder.HasOne(source => source.SourceUser).WithMany(like => like.LikedUsers)
             .HasForeignKey(source => source.SourceUserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(target => target.TargetUser).WithMany(like => like.LikedByUsers)
             .HasForeignKey(target => target.TargetUserId)
-            .OnDelete(DeleteBehavior.Cascade);
-        // .OnDelete(DeleteBehavior.Cascade); MUDAR QUANDO USAR SqlServer para evitar conflito.
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
