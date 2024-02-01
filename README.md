@@ -3,7 +3,7 @@ O projeto apresenta uma aplicação completa que simula um aplicativo de relacio
 
 Projeto desenvolvido com base no curso de ***Neil Cummings***
 
-<img src="https://www.udemy.com/staticx/udemy/images/v7/logo-udemy.svg" style="width: 200px" href="https://www.udemy.com/course/build-an-app-with-aspnet-core-and-angular-from-scratch/">
+<img src="./assets/udemy.png" style="width: 200px" href="https://www.udemy.com/course/build-an-app-with-aspnet-core-and-angular-from-scratch/">
 
 
 
